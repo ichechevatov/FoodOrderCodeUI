@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var promotionsScrollView: UIScrollView!
     var menuCollectionView: UICollectionView!
     var menuLabel: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
             
             imageView.layer.cornerRadius = 12
             imageView.clipsToBounds = true
-           
+            
             promoImagesViews.append(imageView)
         }
         
@@ -129,6 +129,7 @@ class ViewController: UIViewController {
         )
     }
     
+    //MARK: -MenuCollectionViewCreate
     func menuCollectionViewCreate(){
         let layout = UICollectionViewFlowLayout()
         menuCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -137,7 +138,7 @@ class ViewController: UIViewController {
         
         layout.minimumInteritemSpacing = gorizontalAndVerticalMenuSpacing
         layout.minimumLineSpacing = gorizontalAndVerticalMenuSpacing
-
+        
         layout.sectionInset = UIEdgeInsets(top: topMenuViewSpacing, left: leftAndRightMenuViewSpacing, bottom: 0, right: leftAndRightMenuViewSpacing)
         
         menuCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "menu")
@@ -155,6 +156,7 @@ class ViewController: UIViewController {
         menuCollectionView.dataSource = self
     }
     
+    //MARK:- MenuLabelCreate
     func menuLabelCreate(){
         menuLabel = UILabel()
         view.addSubview(menuLabel)
@@ -169,7 +171,7 @@ class ViewController: UIViewController {
     }
 }
 
-
+//MARK: -UICollectionViewDelegate
 extension ViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(menuCollectionView.frame)
@@ -181,12 +183,11 @@ extension ViewController: UICollectionViewDelegate{
     
 }
 
+//MARK: -UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return countMenuItem
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "menu", for: indexPath) as! CollectionViewCell
@@ -194,19 +195,15 @@ extension ViewController: UICollectionViewDataSource{
         cell.confugure()
         return cell
     }
-    
-    
 }
+
+//MARK: -UICollectionViewDelegateFlowLayout
 extension ViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: (
-                        (menuCollectionView.frame.size.width
-                            - (leftAndRightMenuViewSpacing * 2)
-                         - (gorizontalAndVerticalMenuSpacing * 2)
-                        ) / 3), height: (menuCollectionView.frame.size.height - topMenuViewSpacing - gorizontalAndVerticalMenuSpacing) / 2)
-        
-        
+                        (menuCollectionView.frame.size.width - (leftAndRightMenuViewSpacing * 2) - (gorizontalAndVerticalMenuSpacing * 2)) / 3),
+                        height: (menuCollectionView.frame.size.height - topMenuViewSpacing - gorizontalAndVerticalMenuSpacing) / 2)
     }
     
 }
